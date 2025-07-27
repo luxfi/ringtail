@@ -3,9 +3,9 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"lattice-threshold-signature/networking"
-	"lattice-threshold-signature/primitives"
-	"lattice-threshold-signature/sign"
+	"github.com/luxfi/ringtail/networking"
+	"github.com/luxfi/ringtail/primitives"
+	"github.com/luxfi/ringtail/sign"
 	"log"
 	"math/big"
 	"net"

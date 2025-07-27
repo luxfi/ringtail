@@ -5,8 +5,8 @@ import (
 	"log"
 	"math/big"
 
-	"lattice-threshold-signature/primitives"
-	"lattice-threshold-signature/utils"
+	"github.com/luxfi/ringtail/primitives"
+	"github.com/luxfi/ringtail/utils"
 
 	"github.com/tuneinsight/lattigo/v5/ring"
 	"github.com/tuneinsight/lattigo/v5/utils/sampling"

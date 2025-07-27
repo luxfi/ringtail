@@ -3,7 +3,7 @@ package primitives
 import (
 	"bytes"
 	"encoding/binary"
-	"lattice-threshold-signature/utils"
+	"github.com/luxfi/ringtail/utils"
 	"log"
 
 	"github.com/tuneinsight/lattigo/v5/ring"

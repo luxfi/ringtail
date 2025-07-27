@@ -1,12 +1,13 @@
-module lattice-threshold-signature
+module github.com/luxfi/ringtail
 
-go 1.19
+go 1.21
+
+toolchain go1.24.5
 
 require (
 	github.com/montanaflynn/stats v0.7.1
 	github.com/tuneinsight/lattigo/v5 v5.0.2
 	github.com/zeebo/blake3 v0.2.3
-	gonum.org/v1/gonum v0.15.0
 )
 
 require (

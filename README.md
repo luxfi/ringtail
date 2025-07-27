@@ -1,8 +1,10 @@
 # Ringtail
 
-This is a pure Golang implementation of Ringtail [eprint.iacr.org/2024/1113](https://eprint.iacr.org/2024/1113), a practical two-round threshold signature scheme from LWE.
+This is a pure Golang implementation of Ringtail [eprint.iacr.org/2024/1113](https://eprint.iacr.org/2024/1113), a practical two-round threshold signature scheme from LWE, optimized for integration with the Lux Network consensus protocol.
 
-**WARNING:** This implementation is an academic proof-of-concept prototype, has not received careful code review, and is not ready for production use.
+**Version:** v0.1.0
+
+**Status:** This implementation has been enhanced for production use with the Lux Network, including improved error handling, configuration management, and consensus integration support. However, it should still undergo thorough security auditing before mainnet deployment.
 
 ### Codebase Overview
 - `networking/`

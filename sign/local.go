@@ -2,7 +2,7 @@ package sign
 
 import (
 	"fmt"
-	"lattice-threshold-signature/primitives"
+	"github.com/luxfi/ringtail/primitives"
 	"log"
 	"math/big"
 	"time"

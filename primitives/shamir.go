@@ -2,7 +2,7 @@ package primitives
 
 import (
 	"crypto/rand"
-	"lattice-threshold-signature/utils"
+	"github.com/luxfi/ringtail/utils"
 	"math/big"
 
 	"github.com/tuneinsight/lattigo/v5/ring"
