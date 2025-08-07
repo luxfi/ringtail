@@ -135,6 +135,7 @@ linters-settings:
   gosec:
     excludes:
       - G104  # Ignore error checking for some cases
+      - G115  # Integer overflow (controlled conversions in network protocol)
       - G304  # File path provided by user
       - G401  # Use of weak cryptographic primitive (we use specific crypto for research)
       - G501  # Weak crypto (same reason)

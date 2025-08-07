@@ -54,8 +54,14 @@ func GenerateMAC(TildeD structs.Matrix[ring.Poly], MACKey []byte, partyID int, s
 	if err := binary.Write(buf, binary.BigEndian, int64(sid)); err != nil {
 		log.Fatalf("Error writing sid: %v\n", err)
 	}
-	if err := binary.Write(buf, binary.BigEndian, T); err != nil {
-		log.Fatalf("Error writing T: %v\n", err)
+	// Write T array length and elements
+	if err := binary.Write(buf, binary.BigEndian, int32(len(T))); err != nil {
+		log.Fatalf("Error writing T length: %v\n", err)
+	}
+	for _, t := range T {
+		if err := binary.Write(buf, binary.BigEndian, int32(t)); err != nil {
+			log.Fatalf("Error writing T element: %v\n", err)
+		}
 	}
 
 	if _, err := hasher.Write(buf.Bytes()); err != nil {
@@ -134,8 +140,14 @@ func Hash(A structs.Matrix[ring.Poly], b structs.Vector[ring.Poly], D map[int]st
 	if err := binary.Write(buf, binary.BigEndian, int64(sid)); err != nil {
 		log.Fatalf("Error writing sid: %v\n", err)
 	}
-	if err := binary.Write(buf, binary.BigEndian, T); err != nil {
-		log.Fatalf("Error writing T: %v\n", err)
+	// Write T array length and elements
+	if err := binary.Write(buf, binary.BigEndian, int32(len(T))); err != nil {
+		log.Fatalf("Error writing T length: %v\n", err)
+	}
+	for _, t := range T {
+		if err := binary.Write(buf, binary.BigEndian, int32(t)); err != nil {
+			log.Fatalf("Error writing T element: %v\n", err)
+		}
 	}
 
 	for i := 0; i < len(D); i++ {
