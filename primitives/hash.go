@@ -19,8 +19,12 @@ const keySize = 32
 func PRNGKey(skShare structs.Vector[ring.Poly]) []byte {
 	hasher := blake3.New()
 	buf := new(bytes.Buffer)
-	skShare.WriteTo(buf)
-	hasher.Write(buf.Bytes())
+	if _, err := skShare.WriteTo(buf); err != nil {
+		log.Fatalf("Error writing skShare: %v\n", err)
+	}
+	if _, err := hasher.Write(buf.Bytes()); err != nil {
+		log.Fatalf("Error writing to hasher: %v\n", err)
+	}
 
 	skHash := hasher.Sum(nil)
 	return skHash[:keySize]
@@ -32,17 +36,31 @@ func GenerateMAC(TildeD structs.Matrix[ring.Poly], MACKey []byte, partyID int, s
 	buf := new(bytes.Buffer)
 
 	if verify {
-		binary.Write(buf, binary.BigEndian, int64(otherParty))
+		if err := binary.Write(buf, binary.BigEndian, int64(otherParty)); err != nil {
+			log.Fatalf("Error writing otherParty: %v\n", err)
+		}
 	} else {
-		binary.Write(buf, binary.BigEndian, int64(partyID))
+		if err := binary.Write(buf, binary.BigEndian, int64(partyID)); err != nil {
+			log.Fatalf("Error writing partyID: %v\n", err)
+		}
 	}
 
-	binary.Write(buf, binary.BigEndian, MACKey)
-	TildeD.WriteTo(buf)
-	binary.Write(buf, binary.BigEndian, int64(sid))
-	binary.Write(buf, binary.BigEndian, T)
+	if err := binary.Write(buf, binary.BigEndian, MACKey); err != nil {
+		log.Fatalf("Error writing MACKey: %v\n", err)
+	}
+	if _, err := TildeD.WriteTo(buf); err != nil {
+		log.Fatalf("Error writing TildeD: %v\n", err)
+	}
+	if err := binary.Write(buf, binary.BigEndian, int64(sid)); err != nil {
+		log.Fatalf("Error writing sid: %v\n", err)
+	}
+	if err := binary.Write(buf, binary.BigEndian, T); err != nil {
+		log.Fatalf("Error writing T: %v\n", err)
+	}
 
-	hasher.Write(buf.Bytes())
+	if _, err := hasher.Write(buf.Bytes()); err != nil {
+		log.Fatalf("Error writing to hasher: %v\n", err)
+	}
 	MAC := hasher.Sum(nil)
 	return MAC[:keySize]
 }
@@ -52,10 +70,16 @@ func GaussianHash(r *ring.Ring, hash []byte, mu string, sigmaU float64, boundU f
 	hasher := blake3.New()
 	buf := new(bytes.Buffer)
 
-	binary.Write(buf, binary.BigEndian, hash)
-	buf.WriteString(mu)
+	if err := binary.Write(buf, binary.BigEndian, hash); err != nil {
+		log.Fatalf("Error writing hash: %v\n", err)
+	}
+	if _, err := buf.WriteString(mu); err != nil {
+		log.Fatalf("Error writing mu: %v\n", err)
+	}
 
-	hasher.Write(buf.Bytes())
+	if _, err := hasher.Write(buf.Bytes()); err != nil {
+		log.Fatalf("Error writing to hasher: %v\n", err)
+	}
 	hashOutput := hasher.Sum(nil)
 
 	prng, _ := sampling.NewKeyedPRNG(hashOutput[:keySize])
@@ -70,12 +94,22 @@ func PRF(r *ring.Ring, sd_ij []byte, PRFKey []byte, mu string, hash []byte, n in
 	hasher := blake3.New()
 	buf := new(bytes.Buffer)
 
-	binary.Write(buf, binary.BigEndian, PRFKey)
-	binary.Write(buf, binary.BigEndian, sd_ij)
-	binary.Write(buf, binary.BigEndian, hash)
-	buf.WriteString(mu)
+	if err := binary.Write(buf, binary.BigEndian, PRFKey); err != nil {
+		log.Fatalf("Error writing PRFKey: %v\n", err)
+	}
+	if err := binary.Write(buf, binary.BigEndian, sd_ij); err != nil {
+		log.Fatalf("Error writing sd_ij: %v\n", err)
+	}
+	if err := binary.Write(buf, binary.BigEndian, hash); err != nil {
+		log.Fatalf("Error writing hash: %v\n", err)
+	}
+	if _, err := buf.WriteString(mu); err != nil {
+		log.Fatalf("Error writing mu: %v\n", err)
+	}
 
-	hasher.Write(buf.Bytes())
+	if _, err := hasher.Write(buf.Bytes()); err != nil {
+		log.Fatalf("Error writing to hasher: %v\n", err)
+	}
 	hashOutput := hasher.Sum(nil)
 
 	prng, _ := sampling.NewKeyedPRNG(hashOutput[:keySize])
@@ -97,8 +131,12 @@ func Hash(A structs.Matrix[ring.Poly], b structs.Vector[ring.Poly], D map[int]st
 		log.Fatalf("Error writing vector b: %v\n", err)
 	}
 
-	binary.Write(buf, binary.BigEndian, int64(sid))
-	binary.Write(buf, binary.BigEndian, T)
+	if err := binary.Write(buf, binary.BigEndian, int64(sid)); err != nil {
+		log.Fatalf("Error writing sid: %v\n", err)
+	}
+	if err := binary.Write(buf, binary.BigEndian, T); err != nil {
+		log.Fatalf("Error writing T: %v\n", err)
+	}
 
 	for i := 0; i < len(D); i++ {
 		if _, err := D[i].WriteTo(buf); err != nil {
@@ -106,7 +144,9 @@ func Hash(A structs.Matrix[ring.Poly], b structs.Vector[ring.Poly], D map[int]st
 		}
 	}
 
-	hasher.Write(buf.Bytes())
+	if _, err := hasher.Write(buf.Bytes()); err != nil {
+		log.Fatalf("Error writing to hasher: %v\n", err)
+	}
 	hashOutput := hasher.Sum(nil)
 	return hashOutput[:keySize]
 }
@@ -128,9 +168,13 @@ func LowNormHash(r *ring.Ring, A structs.Matrix[ring.Poly], b structs.Vector[rin
 		log.Fatalf("Error writing vector h: %v\n", err)
 	}
 
-	binary.Write(buf, binary.BigEndian, []byte(mu))
+	if err := binary.Write(buf, binary.BigEndian, []byte(mu)); err != nil {
+		log.Fatalf("Error writing mu: %v\n", err)
+	}
 
-	hasher.Write(buf.Bytes())
+	if _, err := hasher.Write(buf.Bytes()); err != nil {
+		log.Fatalf("Error writing to hasher: %v\n", err)
+	}
 	hashOutput := hasher.Sum(nil)
 
 	prng, _ := sampling.NewKeyedPRNG(hashOutput[:keySize])

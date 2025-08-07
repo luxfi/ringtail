@@ -2,8 +2,6 @@
 
 This is a pure Golang implementation of Ringtail [eprint.iacr.org/2024/1113](https://eprint.iacr.org/2024/1113), a practical two-round threshold signature scheme from LWE.
 
-**WARNING:** This implementation is an academic proof-of-concept prototype, has not received careful code review, and is not ready for production use.
-
 ### Codebase Overview
 - `networking/`
     - `networking.go`: Includes the networking stack which allows signers to form peer-to-peer network connections with other parties. Each party concurrently communicates with every other party by serializing and sending its messages through outgoing TCP sockets, while simultaneously receiving and processing incoming messages.
@@ -21,4 +19,4 @@ This is a pure Golang implementation of Ringtail [eprint.iacr.org/2024/1113](htt
 
 ### License
 
-Ringtail is licensed under the Apache 2.0 License. See [LICENSE](https://github.com/daryakaviani/ringtail/blob/main/LICENSE).
+Ringtail is licensed under the Apache 2.0 License. See [LICENSE](https://github.com/luxfi/ringtail/blob/main/LICENSE).
