@@ -6,8 +6,8 @@ import (
 	"math/big"
 	"strings"
 
-	"github.com/tuneinsight/lattigo/v5/ring"
-	"github.com/tuneinsight/lattigo/v5/utils/structs"
+	"github.com/luxfi/lattice/v6/ring"
+	"github.com/luxfi/lattice/v6/utils/structs"
 	"github.com/zeebo/blake3"
 )
 

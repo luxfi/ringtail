@@ -3,9 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"lattice-threshold-signature/networking"
-	"lattice-threshold-signature/primitives"
-	"lattice-threshold-signature/sign"
 	"log"
 	"math/big"
 	"net"
@@ -14,9 +11,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tuneinsight/lattigo/v5/ring"
-	"github.com/tuneinsight/lattigo/v5/utils/sampling"
-	"github.com/tuneinsight/lattigo/v5/utils/structs"
+	"ringtail/networking"
+	"ringtail/primitives"
+	"ringtail/sign"
+
+	"github.com/luxfi/lattice/v6/ring"
+	"github.com/luxfi/lattice/v6/utils/sampling"
+	"github.com/luxfi/lattice/v6/utils/structs"
 )
 
 func main() {

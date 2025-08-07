@@ -5,12 +5,12 @@ import (
 	"log"
 	"math/big"
 
-	"lattice-threshold-signature/primitives"
-	"lattice-threshold-signature/utils"
+	"ringtail/primitives"
+	"ringtail/utils"
 
-	"github.com/tuneinsight/lattigo/v5/ring"
-	"github.com/tuneinsight/lattigo/v5/utils/sampling"
-	"github.com/tuneinsight/lattigo/v5/utils/structs"
+	"github.com/luxfi/lattice/v6/ring"
+	"github.com/luxfi/lattice/v6/utils/sampling"
+	"github.com/luxfi/lattice/v6/utils/structs"
 )
 
 // Party struct holds all state and methods for a party in the protocol

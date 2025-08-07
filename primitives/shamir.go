@@ -2,11 +2,12 @@ package primitives
 
 import (
 	"crypto/rand"
-	"lattice-threshold-signature/utils"
 	"math/big"
 
-	"github.com/tuneinsight/lattigo/v5/ring"
-	"github.com/tuneinsight/lattigo/v5/utils/structs"
+	"ringtail/utils"
+
+	"github.com/luxfi/lattice/v6/ring"
+	"github.com/luxfi/lattice/v6/utils/structs"
 )
 
 // ShamirSecretSharing shares each coefficient of a vector of ring.Poly across k parties using (t, k)-threshold Shamir secret sharing.

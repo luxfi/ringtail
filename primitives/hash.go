@@ -3,12 +3,13 @@ package primitives
 import (
 	"bytes"
 	"encoding/binary"
-	"lattice-threshold-signature/utils"
 	"log"
 
-	"github.com/tuneinsight/lattigo/v5/ring"
-	"github.com/tuneinsight/lattigo/v5/utils/sampling"
-	"github.com/tuneinsight/lattigo/v5/utils/structs"
+	"ringtail/utils"
+
+	"github.com/luxfi/lattice/v6/ring"
+	"github.com/luxfi/lattice/v6/utils/sampling"
+	"github.com/luxfi/lattice/v6/utils/structs"
 	"github.com/zeebo/blake3"
 )
 

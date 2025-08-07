@@ -2,15 +2,16 @@ package sign
 
 import (
 	"fmt"
-	"lattice-threshold-signature/primitives"
 	"log"
+
 	"math/big"
+	"ringtail/primitives"
 	"time"
 
+	"github.com/luxfi/lattice/v6/ring"
+	"github.com/luxfi/lattice/v6/utils/sampling"
+	"github.com/luxfi/lattice/v6/utils/structs"
 	"github.com/montanaflynn/stats"
-	"github.com/tuneinsight/lattigo/v5/ring"
-	"github.com/tuneinsight/lattigo/v5/utils/sampling"
-	"github.com/tuneinsight/lattigo/v5/utils/structs"
 )
 
 var K int
