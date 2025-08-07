@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"ringtail/utils"
-	
+
 	"github.com/luxfi/lattice/v6/ring"
 	"github.com/luxfi/lattice/v6/utils/sampling"
 	"github.com/luxfi/lattice/v6/utils/structs"
@@ -234,7 +234,7 @@ func TestGenerateRandomSeed(t *testing.T) {
 	// Initialize precomputed randomness for the test
 	testKey := []byte("test-key-for-randomness-generation")
 	utils.PrecomputeRandomness(1024, testKey) // Precompute enough randomness for the test
-	
+
 	seed := GenerateRandomSeed()
 
 	if len(seed) != 32 {

@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"ringtail/utils"
-	
+
 	"github.com/luxfi/lattice/v6/ring"
 	"github.com/luxfi/lattice/v6/utils/sampling"
 	"github.com/luxfi/lattice/v6/utils/structs"
@@ -61,7 +61,7 @@ func TestShamirSecretSharing(t *testing.T) {
 	// Initialize precomputed randomness for the test
 	testKey := []byte("test-key-for-shamir-secret-sharing")
 	utils.PrecomputeRandomness(100000, testKey) // Precompute enough randomness
-	
+
 	prng, _ := sampling.NewPRNG()
 	sampler := ring.NewUniformSampler(prng, r)
 
@@ -127,7 +127,7 @@ func TestShamirSecretSharingGeneral(t *testing.T) {
 	// Initialize precomputed randomness for the test
 	testKey := []byte("test-key-for-shamir-general")
 	utils.PrecomputeRandomness(100000, testKey) // Precompute enough randomness
-	
+
 	prng, _ := sampling.NewPRNG()
 	sampler := ring.NewUniformSampler(prng, r)
 

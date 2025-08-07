@@ -216,7 +216,7 @@ func TestP2PComm_SendRecvBytes(t *testing.T) {
 	if len(receivedBytesSlices) != len(testBytesSlices) {
 		t.Errorf("Received %d slices, expected %d", len(receivedBytesSlices), len(testBytesSlices))
 	}
-	
+
 	for i, slice := range testBytesSlices {
 		if i < len(receivedBytesSlices) {
 			if string(receivedBytesSlices[i]) != string(slice) {
