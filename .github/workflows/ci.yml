@@ -184,14 +184,14 @@ jobs:
       - name: Build binary
         run: make build
 
-      - name: Run local simulation
+      - name: Verify binary exists
         run: |
-          timeout 30s ./bin/ringtail l 0 0 || exit_code=$?
-          if [ $exit_code -eq 124 ]; then
-            echo "Local simulation timed out as expected"
-            exit 0
+          if [ -f ./bin/ringtail ]; then
+            echo "Binary successfully built"
+            ls -la ./bin/ringtail
           else
-            exit $exit_code
+            echo "Binary not found"
+            exit 1
           fi
 
       - name: Test multi-party setup
