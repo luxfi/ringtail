@@ -5,8 +5,8 @@ import (
 	"log"
 	"math/big"
 
-	"ringtail/primitives"
-	"ringtail/utils"
+	"github.com/luxfi/ringtail/primitives"
+	"github.com/luxfi/ringtail/utils"
 
 	"github.com/luxfi/lattice/v6/ring"
 	"github.com/luxfi/lattice/v6/utils/sampling"

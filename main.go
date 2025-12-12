@@ -11,9 +11,9 @@ import (
 	"sync"
 	"time"
 
-	"ringtail/networking"
-	"ringtail/primitives"
-	"ringtail/sign"
+	"github.com/luxfi/ringtail/networking"
+	"github.com/luxfi/ringtail/primitives"
+	"github.com/luxfi/ringtail/sign"
 
 	"github.com/luxfi/lattice/v6/ring"
 	"github.com/luxfi/lattice/v6/utils/sampling"

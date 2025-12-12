@@ -4,7 +4,7 @@ import (
 	"crypto/rand"
 	"math/big"
 
-	"ringtail/utils"
+	"github.com/luxfi/ringtail/utils"
 
 	"github.com/luxfi/lattice/v6/ring"
 	"github.com/luxfi/lattice/v6/utils/structs"

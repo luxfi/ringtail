@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"math/big"
-	"ringtail/primitives"
+	"github.com/luxfi/ringtail/primitives"
 	"time"
 
 	"github.com/luxfi/lattice/v6/ring"
