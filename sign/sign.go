@@ -263,10 +263,17 @@ func (party *Party) SignFinalize(z map[int]structs.Vector[ring.Poly], A structs.
 	return party.C, z_sum, Delta
 }
 
-// Verify verifies the correctness of the signature
+// Verify verifies the correctness of the signature.
+// Note: This function does not modify its inputs - it creates copies where needed.
 func Verify(r *ring.Ring, r_xi *ring.Ring, r_nu *ring.Ring, z structs.Vector[ring.Poly], A structs.Matrix[ring.Poly], mu string, bTilde structs.Vector[ring.Poly], c ring.Poly, roundedDelta structs.Vector[ring.Poly]) bool {
+	// Make a copy of z to avoid modifying the input signature
+	zCopy := make(structs.Vector[ring.Poly], len(z))
+	for i := range z {
+		zCopy[i] = *z[i].CopyNew()
+	}
+
 	Az_bc := utils.InitializeVector(r, M)
-	utils.MatrixVectorMul(r, A, z, Az_bc)
+	utils.MatrixVectorMul(r, A, zCopy, Az_bc)
 	bc := utils.InitializeVector(r, M)
 
 	b := utils.RestoreVector(r, r_xi, bTilde, Xi)
@@ -287,9 +294,9 @@ func Verify(r *ring.Ring, r_xi *ring.Ring, r_nu *ring.Ring, z structs.Vector[rin
 	}
 
 	Delta := utils.RestoreVector(r, r_nu, roundedDelta, Nu)
-	utils.ConvertVectorFromNTT(r, z)
+	utils.ConvertVectorFromNTT(r, zCopy)
 
-	return CheckL2Norm(r, Delta, z)
+	return CheckL2Norm(r, Delta, zCopy)
 }
 
 // CheckL2Norm checks if the L2 norm of the vector of Delta is less than or equal to Bsquare
