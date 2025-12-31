@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"sync"
 
-	latticegpu "github.com/luxfi/lattice/v6/gpu"
+	latticegpu "github.com/luxfi/lattice/v7/gpu"
 )
 
 // RingtailGPU provides GPU-accelerated operations for Ringtail threshold signing.

@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/luxfi/lattice/v6/ring"
-	"github.com/luxfi/lattice/v6/utils/structs"
+	"github.com/luxfi/lattice/v7/ring"
+	"github.com/luxfi/lattice/v7/utils/structs"
 )
 
 type Communicator interface {

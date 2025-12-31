@@ -4,8 +4,8 @@ import (
 	"log"
 	"math/big"
 
-	"github.com/luxfi/lattice/v6/ring"
-	"github.com/luxfi/lattice/v6/utils/structs"
+	"github.com/luxfi/lattice/v7/ring"
+	"github.com/luxfi/lattice/v7/utils/structs"
 )
 
 const logN = 8

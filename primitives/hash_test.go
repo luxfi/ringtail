@@ -5,9 +5,9 @@ import (
 
 	"github.com/luxfi/ringtail/utils"
 
-	"github.com/luxfi/lattice/v6/ring"
-	"github.com/luxfi/lattice/v6/utils/sampling"
-	"github.com/luxfi/lattice/v6/utils/structs"
+	"github.com/luxfi/lattice/v7/ring"
+	"github.com/luxfi/lattice/v7/utils/sampling"
+	"github.com/luxfi/lattice/v7/utils/structs"
 )
 
 func TestPRNGKey(t *testing.T) {
