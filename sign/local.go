@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"math/big"
 	"github.com/luxfi/ringtail/primitives"
+	"math/big"
 	"time"
 
 	"github.com/luxfi/lattice/v7/ring"
