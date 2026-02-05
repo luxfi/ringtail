@@ -1,6 +1,6 @@
 module github.com/luxfi/ringtail
 
-go 1.25.5
+go 1.25.7
 
 require (
 	github.com/luxfi/lattice/v7 v7.0.0
