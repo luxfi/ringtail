@@ -163,7 +163,7 @@ func (party *Party) SignRound2Preprocess(A structs.Matrix[ring.Poly], b structs.
 	}
 
 	if !FullRankCheck(DSum, party.Ring) {
-		log.Fatalf("Failed full rank check! Aborting.")
+		return false, nil, nil
 	}
 
 	return true, DSum, hash
