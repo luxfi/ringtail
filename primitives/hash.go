@@ -15,7 +15,13 @@ import (
 
 const keySize = 32
 
-// PRNGKey generates a key for PRNG using the secret key share
+// PRNGKey generates a key for PRNG using the secret key share.
+//
+// DEPRECATED: kept only for backward-byte-compat with prior KAT runs and
+// callers outside the Sign protocol. The Round-1 PRNG seed MUST mix sid
+// (and ideally μ) to prevent R/E reuse across signatures of the same
+// party — see PRNGKeyForRound below and LP-073 §5.8 (paper amended
+// 2026-05-03 in coordination with the C++ port at luxcpp/crypto).
 func PRNGKey(skShare structs.Vector[ring.Poly]) []byte {
 	hasher := blake3.New()
 	buf := new(bytes.Buffer)
@@ -26,6 +32,34 @@ func PRNGKey(skShare structs.Vector[ring.Poly]) []byte {
 		log.Fatalf("Error writing to hasher: %v\n", err)
 	}
 
+	skHash := hasher.Sum(nil)
+	return skHash[:keySize]
+}
+
+// PRNGKeyForRound generates a per-round PRNG seed by domain-separating
+// the secret-share material with the session id. CRIT-1 fix
+// (red audit, 2026-05-03): without sid mixing, R/E/D are byte-identical
+// across every Sign call of the same Setup — multi-Sign leaks R via
+// (z_sum − Σ s_i·λ_i·c)·u^{-1} = R.
+//
+// Layout: BLAKE3(skShare.WriteTo bytes || "RingtailRoundV2" || be64(sid)).
+// Domain tag distinguishes from any other future per-share keying.
+func PRNGKeyForRound(skShare structs.Vector[ring.Poly], sid int64) []byte {
+	hasher := blake3.New()
+	buf := new(bytes.Buffer)
+	if _, err := skShare.WriteTo(buf); err != nil {
+		log.Fatalf("Error writing skShare: %v\n", err)
+	}
+	if _, err := hasher.Write(buf.Bytes()); err != nil {
+		log.Fatalf("Error writing to hasher (sk): %v\n", err)
+	}
+	const tag = "RingtailRoundV2"
+	if _, err := hasher.Write([]byte(tag)); err != nil {
+		log.Fatalf("Error writing tag: %v\n", err)
+	}
+	if err := binary.Write(hasher, binary.BigEndian, sid); err != nil {
+		log.Fatalf("Error writing sid: %v\n", err)
+	}
 	skHash := hasher.Sum(nil)
 	return skHash[:keySize]
 }

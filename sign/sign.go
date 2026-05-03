@@ -99,8 +99,13 @@ func Gen(r *ring.Ring, r_xi *ring.Ring, uniformSampler *ring.UniformSampler, tru
 func (party *Party) SignRound1(A structs.Matrix[ring.Poly], sid int, PRFKey []byte, T []int) (structs.Matrix[ring.Poly], map[int][]byte) {
 	r := party.Ring
 
-	// Initialize r_star and e_star
-	skHash := primitives.PRNGKey(party.SkShare)
+	// CRIT-1 fix (2026-05-03): mix sid into the per-party PRNG seed.
+	// Previously this was PRNGKey(SkShare) which produced byte-identical
+	// R, E, D across every Sign call of the same Setup → multi-Sign leaked
+	// R. PRNGKeyForRound domain-separates by sid; per-block sid
+	// monotonicity (LP-020 Quasar = block height) gives uniqueness for
+	// free. See LP-073 §5.8 (amended) and red audit response.
+	skHash := primitives.PRNGKeyForRound(party.SkShare, int64(sid))
 	prng, _ := sampling.NewKeyedPRNG(skHash)
 	gaussianParams := ring.DiscreteGaussian{Sigma: SigmaStar, Bound: BoundStar}
 	gaussianSampler := ring.NewGaussianSampler(prng, r, gaussianParams, false)
