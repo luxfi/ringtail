@@ -115,18 +115,32 @@ func NewDKGSession(params *Params, partyID, n, t int) (*DKGSession, error) {
 
 // Round1 generates the party's random polynomial f_i(x) of degree t-1,
 // computes commitments and shares for all other parties.
+//
+// Uses crypto/rand for the per-party Gaussian PRNG seed. For deterministic
+// testing / KAT generation, use Round1WithSeed.
 func (d *DKGSession) Round1() (*Round1Output, error) {
+	randKey := make([]byte, sign.KeySize)
+	if _, err := io.ReadFull(rand.Reader, randKey); err != nil {
+		return nil, fmt.Errorf("dkg: random read: %w", err)
+	}
+	return d.Round1WithSeed(randKey)
+}
+
+// Round1WithSeed is the deterministic variant of Round1: the caller supplies
+// the 32-byte seed used to key the Gaussian PRNG. Same seed → same Round1Output
+// for a given (partyID, n, t, A) tuple. Used by the KAT oracle to pin every
+// Round1 byte stream.
+func (d *DKGSession) Round1WithSeed(seed []byte) (*Round1Output, error) {
+	if len(seed) != sign.KeySize {
+		return nil, fmt.Errorf("dkg: Round1WithSeed: expected %d-byte seed, got %d", sign.KeySize, len(seed))
+	}
 	r := d.params.R
 
 	// Sample random polynomial coefficients: f_i(x) = c0 + c1*x + ... + c_{t-1}*x^{t-1}
 	// Each coefficient is a vector in R_q^N (same shape as a secret key share).
 	d.coeffs = make([]structs.Vector[ring.Poly], d.t)
 
-	randKey := make([]byte, sign.KeySize)
-	if _, err := io.ReadFull(rand.Reader, randKey); err != nil {
-		return nil, fmt.Errorf("dkg: random read: %w", err)
-	}
-	prng, err := sampling.NewKeyedPRNG(randKey)
+	prng, err := sampling.NewKeyedPRNG(seed)
 	if err != nil {
 		return nil, err
 	}
